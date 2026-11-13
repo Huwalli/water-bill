@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>家庭帳單中心</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">💧 家庭帳單中心</div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a class="nav-link active" id="nav-water" href="#" onclick="showPage('water')">水費</a></li>
+          <li><a class="nav-link" id="nav-power" href="#" onclick="showPage('power')">電費</a></li>
+          <li><a class="nav-link" id="nav-gas" href="#" onclick="showPage('gas')">瓦斯</a></li>
+          <li><a class="nav-link" id="nav-about" href="#" onclick="showPage('about')">關於</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="layout page active" id="page-water">
+
+    <section class="summary">
+      <div class="stat-card">
+        <span class="stat-label">本期用水度數</span>
+        <strong class="stat-value">110 度</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">本期用水費</span>
+        <strong class="stat-value">1,107.75 元</strong>
+      </div>
+      <div class="stat-card warn">
+        <span class="stat-label">抄表方式</span>
+        <strong class="stat-value">隔月抄表</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">水費計算器</h2>
+      <div class="card">
+        <h1>💧 水費計算器</h1>
+        <div class="subtitle">依台水公司分級費率計算（隔月抄表）</div>
+        <label for="usage">這期實際用水度數</label>
+        <input type="number" id="usage" placeholder="例如：110" min="0">
+        <button onclick="calculate()">計算水費</button>
+        <div class="result" id="result">
+          <div class="result-row"><span>第1段（0-20度）</span><span id="tier1">-</span></div>
+          <div class="result-row"><span>第2段（21-60度）</span><span id="tier2">-</span></div>
+          <div class="result-row"><span>第3段（61-100度）</span><span id="tier3">-</span></div>
+          <div class="result-row"><span>第4段（101度以上）</span><span id="tier4">-</span></div>
+          <div class="result-row total"><span>用水費總計</span><span id="total">-</span></div>
+        </div>
+        <div class="source">
+          資料來源：台灣自來水公司第五區管理處官方公告費率表<br>
+          <a href="https://www.water.gov.tw/dist5/Subject/Detail/1288?nodeId=7816" target="_blank">查看原始公告</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">歷史用水紀錄</h2>
+      <table class="history">
+        <thead>
+          <tr><th>期別</th><th>用水度數</th><th>用水費（元）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1-2月</td><td>35</td><td>288.75</td></tr>
+          <tr><td>3-4月</td><td>52</td><td>449.40</td></tr>
+          <tr><td>5-6月</td><td>75</td><td>698.25</td></tr>
+          <tr class="highlight"><td>7-8月</td><td>110</td><td>1,107.75</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <main class="layout page" id="page-power">
+
+    <section class="summary">
+      <div class="stat-card">
+        <span class="stat-label">本期用電度數</span>
+        <strong class="stat-value">— 度</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">本期電費</span>
+        <strong class="stat-value">— 元</strong>
+      </div>
+      <div class="stat-card warn">
+        <span class="stat-label">狀態</span>
+        <strong class="stat-value">施工中</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">電費</h2>
+      <div class="card">
+        <h1>⚡ 電費</h1>
+        <div class="subtitle">這一頁還沒做，等你來設計！</div>
+      </div>
+    </section>
+
+  </main>
+
+  <main class ="layout page active" id="page-gas">
+
+    <section class="summary">
+      <div class="stat-card">
+        <span class="stat-label">本期用氣度數</span>
+        <strong class="stat-value">— 度</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">本期瓦斯費</span>
+        <strong class="stat-value">— 元</strong>
+      </div>
+      <div class="stat-card warn">
+        <span class="stat-label">狀態</span>
+        <strong class="stat-value">施工中</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">瓦斯</h2>
+      <div class="card">
+        <h1>🔥 瓦斯</h1>
+        <div class="subtitle">這一頁還沒做，等你來設計！</div>
+      </div>
+    </section>
+
+  </main>
+
+  <main class="layout page" id="page-about">
+
+    <section class="panel">
+      <h2 class="panel-title">關於</h2>
+      <div class="card">
+        <h1>ℹ️ 關於這個網頁</h1>
+        <div class="subtitle">這是練習用的網頁，資料僅供練習使用，實際金額以帳單為準。</div>
+        <p>製作的人：＿＿＿＿</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>資料僅供練習使用，實際金額以帳單為準。</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
