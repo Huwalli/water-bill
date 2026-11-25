@@ -1,36 +1,94 @@
-// ===== 第一關：水費計算器 =====
-const RATES = [
-  { limit: 20, price: 7.35 },
-  { limit: 40, price: 9.45 },
-  { limit: 40, price: 11.55 },
-  { limit: Infinity, price: 12.075 }
-];
+let records = [];
+let month = 0;
 
-function calculate() {
-  const usage = parseFloat(document.getElementById("usage").value);
-  if (isNaN(usage) || usage < 0) {
-    alert("請輸入正確的用水度數");
+function recordHeight() {
+  let date = document.getElementById("date").value;
+  let height = Number(document.getElementById("height").value);
+
+  if (date === "" || height === 0) {
+    document.getElementById("result").innerHTML =
+      "請輸入日期和身高！";
     return;
   }
-  let remaining = usage;
-  let total = 0;
-  RATES.forEach((tier, i) => {
-    const used = Math.min(Math.max(remaining, 0), tier.limit);
-    const fee = used * tier.price;
-    document.getElementById("tier" + (i + 1)).textContent = fee.toFixed(2) + " 元";
-    total += fee;
-    remaining -= used;
+
+  month++;
+
+  let growth = 0;
+
+  // 第一次紀錄沒有上一次身高可以比較
+  if (records.length > 0) {
+    growth = height - records[records.length - 1].height;
+  }
+
+  records.push({
+    date: date,
+    height: height,
+    growth: growth
   });
-  document.getElementById("total").textContent = total.toFixed(2) + " 元";
+allRecords.push({
+  date: date,
+  height: height,
+  growth: growth
+});
+
+showAllRecords();
+  // 顯示這次紀錄
+  document.getElementById("result").innerHTML =
+    "已紀錄！你這次長高了 " + growth + " 公分，請一個月後繼續登記！";
+
+  // 顯示所有紀錄
+  document.getElementById("history").innerHTML +=
+    "<p>第 " + month + " 個月｜" +
+    date + "｜身高：" +
+    height + " 公分｜長高：" +
+    growth + " 公分</p>";
+
+  // 第12個月
+  if (month === 12) {
+    let totalGrowth = 0;
+
+    for (let i = 0; i < records.length; i++) {
+      totalGrowth += records[i].growth;
+    }
+
+    document.getElementById("result").innerHTML =
+      "已紀錄！你這次長高了 " + growth +
+      " 公分，請一個月後繼續登記！<br><br>" +
+      "🎉 恭喜～你成功紀錄了一年！<br>" +
+      "這一年你總共長高了 " +
+      totalGrowth + " 公分！";
+
+    // 清空，開始新的12個月
+    records = [];
+    month = 0;
+  }
+
+  // 清空輸入框
+  document.getElementById("date").value = "";
+  document.getElementById("height").value = "";
+}
+// 儲存所有月份的紀錄
+let allRecords = [];
+
+// 切換分頁
+function showPage(page) {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("allRecordsPage").style.display = "none";
+
+  document.getElementById(page).style.display = "block";
 }
 
-// ===== 第二關：切換頁面 =====
-function showPage(name) {
-  // 1. 先把所有頁面的 active 拿掉
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  // 2. 再把被點的那一頁加上 active
-  document.getElementById("page-" + name).classList.add("active");
-  // 3. 導覽列的高亮也一樣處理
-  document.querySelectorAll(".nav-link").forEach(a => a.classList.remove("active"));
-  document.getElementById("nav-" + name).classList.add("active");
+// 顯示所有身高紀錄
+function showAllRecords() {
+  let html = "";
+
+  for (let i = 0; i < allRecords.length; i++) {
+    html += "<p>日期：" + allRecords[i].date +
+      "｜身高：" + allRecords[i].height +
+      " 公分｜長高：" + allRecords[i].growth +
+      " 公分</p>";
+  }
+
+  document.getElementById("allHistory").innerHTML =
+    html || "目前還沒有身高紀錄！";
 }
