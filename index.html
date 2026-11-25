@@ -1,38 +1,34 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <title>身高紀錄</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="mainPage">
-    <h1>身高紀錄</h1>
-    <label>輸入日期：</label>
-    <input type="date" id="date">
-    <br><br>
-    <label>輸入身高：</label>
-    <input type="number" id="height" placeholder="例如：150">
-    <button onclick="recordHeight()">確認</button>
-    <h2>紀錄結果</h2>
-    <div id="result"></div>
-    <h2>歷史紀錄</h2>
-    <div id="history"></div>
-  </div>
+<script src="script.js"></script>           <!-- 放在 </body> 前 -->
+<div id="mainPage">
+  <h1>身高紀錄</h1>
 
-  <!-- 分頁按鈕 -->
-  <div class="tab-buttons">
-    <button onclick="showPage('mainPage')">身高紀錄</button>
-    <button onclick="showPage('allRecordsPage')">所有身高紀錄</button>
-  </div>
+  <label>輸入日期：</label>
+  <input type="date" id="date">
 
-  <!-- 所有紀錄分頁 -->
-  <div id="allRecordsPage" style="display:none;">
-    <h1>所有身高紀錄</h1>
-    <div id="allHistory"></div>
-    <button onclick="showPage('mainPage')">返回身高紀錄</button>
-  </div>
+  <br><br>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <label>輸入身高：</label>
+  <input type="number" id="height" placeholder="例如：150">
+
+  <button onclick="recordHeight()">確認</button>
+
+  <h2>紀錄結果</h2>
+  <div id="result"></div>
+
+  <h2>歷史紀錄</h2>
+  <div id="history"></div>
+</div>
+<!-- 分頁按鈕 -->
+<div class="tab-buttons">
+  <button onclick="showPage('mainPage')">身高紀錄</button>
+  <button onclick="showPage('allRecordsPage')">所有身高紀錄</button>
+</div>
+
+<!-- 所有紀錄分頁 -->
+<div id="allRecordsPage" style="display:none;">
+  <h1>所有身高紀錄</h1>
+  <div id="allHistory"></div>
+  <button onclick="showPage('mainPage')">返回身高紀錄</button>
+</div>
+
+<link rel="stylesheet" href="style.css">   <!-- 放在 <head> 裡 -->
