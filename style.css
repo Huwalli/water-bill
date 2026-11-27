@@ -1,132 +1,97 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f3f7ff;
-  text-align: center;
-  padding: 30px;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-div {
-  background: white;
-  max-width: 500px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  color: #4a6fa5;
-  margin-bottom: 25px;
-}
-
-h2 {
-  color: #5b7db1;
-  margin-top: 30px;
-}
-
-label {
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-input {
-  padding: 10px;
-  border: 1px solid #ccd6e0;
-  border-radius: 8px;
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-
-button {
-  padding: 10px 20px;
-  background: #6c91c2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-button:hover {
-  background: #5278aa;
-}
-
-#result {
-  margin-top: 20px;
-  padding: 15px;
-  background: #eef5ff;
-  border-radius: 10px;
-  color: #405a78;
-}
-
-#history {
-  margin-top: 15px;
-  text-align: left;
-}
-
-#history p {
-  background: #f7f9fc;
-  padding: 10px;
-  border-radius: 8px;
-  margin: 8px 0;
-}
-
-.title-box {
-  background: linear-gradient(135deg, #e4f3ff, #f5eaff);
-  border: 2px solid #d2e6ff;
-  border-radius: 18px;
-  padding: 18px;
-  margin: 20px auto;
+html, body {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(100, 140, 200, 0.15);
+  background: #060614;
+  color: #e8f6ff;
+  font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+  touch-action: none;          /* 手機上不要拖動整個頁面 */
+  user-select: none;
 }
 
-.title-box h1 {
-  color: #5278aa;
-  font-size: 26px;
-  white-space: nowrap;
-  display: inline-block;
-  margin: 0;
-  animation: moveRight 3s ease-in-out infinite alternate;
-}
+canvas { position: fixed; inset: 0; display: block; }
 
-@keyframes moveRight {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(100px);
-  }
-}
-/.tab-buttons {
+/* 上方資訊列 */
+#hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 12px;
-  margin: 20px auto;
+  padding: 14px 20px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #00e5ff, 0 0 18px #00e5ff;
+  pointer-events: none;
+}
+#hud b { color: #fff; font-size: 22px; }
+#lives { color: #ff3d81; text-shadow: 0 0 8px #ff3d81, 0 0 18px #ff3d81; }
+
+/* 靜音按鈕 */
+#muteBtn {
+  position: fixed;
+  right: 14px; bottom: 14px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 229, 255, .6);
+  background: rgba(6, 6, 20, .6);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 229, 255, .5);
 }
 
-.tab-buttons button {
-  background: #789bc7;
-  padding: 12px 20px;
-  border-radius: 12px;
+/* 開始 / 結束 畫面 */
+#overlay {
+  position: fixed; inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  text-align: center;
+  background: rgba(6, 6, 20, .55);
+  backdrop-filter: blur(4px);
+}
+#overlay.hidden { display: none; }
+
+#title {
+  font-size: clamp(44px, 9vw, 96px);
+  letter-spacing: 8px;
+  color: #fff;
+  text-shadow: 0 0 10px #00e5ff, 0 0 30px #00e5ff, 0 0 60px #b36bff;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+#msg {
+  font-size: clamp(16px, 2.4vw, 22px);
+  line-height: 1.8;
+  color: #bfe9ff;
 }
 
-#allRecordsPage {
-  background: white;
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+#startBtn {
+  padding: 14px 44px;
+  font-size: 22px;
+  font-family: inherit;
+  letter-spacing: 4px;
+  color: #fff;
+  border: 2px solid #00e5ff;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0, 229, 255, .25), rgba(179, 107, 255, .25));
+  box-shadow: 0 0 18px #00e5ff, inset 0 0 18px rgba(0, 229, 255, .35);
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+#startBtn:hover { transform: scale(1.08); box-shadow: 0 0 30px #00e5ff, inset 0 0 24px rgba(0, 229, 255, .5); }
+#startBtn:active { transform: scale(.96); }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
 }
 
-#allHistory p {
-  background: #eef5ff;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 10px 0;
-  color: #5278aa;
+@media (max-width: 600px) {
+  #hud { font-size: 14px; padding: 10px 12px; }
+  #hud b { font-size: 17px; }
 }
