@@ -2,29 +2,64 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <title>霓虹星塵</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>記帳小幫手</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="game"></canvas>
+  <main>
 
-  <!-- 上方資訊列 -->
-  <div id="hud">
-    <div>分數 <b id="score">0</b></div>
-    <div>連擊 <b id="combo">x1</b></div>
-    <div>最高 <b id="best">0</b></div>
-    <div id="lives">♥♥♥</div>
-  </div>
+    <!-- 月份切換 -->
+    <header class="month-bar">
+      <button id="prevMonth" type="button" aria-label="上個月">◀</button>
+      <h1 id="monthTitle"></h1>
+      <button id="nextMonth" type="button" aria-label="下個月">▶</button>
+    </header>
 
-  <button id="muteBtn" title="音效開關">🔊</button>
+    <!-- 這個月總共花多少 -->
+    <section class="card total-card">
+      <p class="label">這個月花了</p>
+      <p id="totalText" class="total"></p>
+      <p id="subText" class="sub"></p>
+    </section>
 
-  <!-- 開始 / 暫停 / 結束 畫面 -->
-  <div id="overlay">
-    <h1 id="title">霓虹星塵</h1>
-    <p id="msg">滑鼠或手指左右移動，自動射擊<br>鍵盤：← → 或 A D　暫停：P</p>
-    <button id="startBtn">開始遊戲</button>
-  </div>
+    <!-- 新增一筆 -->
+    <form id="addForm" class="card">
+      <h2>新增一筆</h2>
+      <input id="amount" type="number" inputmode="numeric" min="1" max="9999999" step="1" placeholder="花了多少錢？" required>
+      <div id="categoryChips" class="chips"></div>
+      <div class="row">
+        <input id="date" type="date" required>
+        <input id="note" type="text" maxlength="20" placeholder="備註（可不寫）">
+      </div>
+      <button class="primary" type="submit">存起來</button>
+    </form>
+
+    <!-- 圖表 1：花在哪裡（環圈圖） -->
+    <section class="card">
+      <h2>花在哪裡</h2>
+      <div class="pie-row">
+        <div id="pie" class="pie"><span id="pieCenter" class="pie-center"></span></div>
+        <ul id="legend" class="legend"></ul>
+      </div>
+    </section>
+
+    <!-- 圖表 2：每天花多少（長條圖） -->
+    <section class="card">
+      <h2>每天花多少</h2>
+      <div id="bars" class="bars"></div>
+      <p id="barNote" class="sub"></p>
+    </section>
+
+    <!-- 明細 -->
+    <section class="card">
+      <h2>明細</h2>
+      <ul id="list" class="list"></ul>
+      <button id="sampleBtn" class="ghost" type="button" hidden>放入範例資料看看</button>
+    </section>
+
+  </main>
 
   <script src="script.js"></script>
 </body>
